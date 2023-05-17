@@ -1,0 +1,59 @@
+package bai1;
+
+import java.util.Scanner;
+
+public class Product {
+	private String description;
+	private String productID;
+	private double price;
+
+	public Product(String description, String productID, double price) {
+		this.description = description;
+		this.productID = productID;
+		this.price = price;
+	}
+
+	public Product() {
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getProductID() {
+		return productID;
+	}
+
+	public void setProductID(String productID) {
+		this.productID = productID;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	@Override
+	public String toString() {
+		return "Product [description=" + description + ", productID=" + productID + ", price=" + price + "]";
+	}
+	
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Nhập productID : ");
+		this.productID = sc.nextLine();
+		
+		System.out.println("Nhập description :");
+		this.description = sc.nextLine();
+		
+		System.out.println("Nhập price : ");
+		this.price = sc.nextDouble();
+	}
+}
