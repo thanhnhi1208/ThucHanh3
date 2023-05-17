@@ -1,0 +1,111 @@
+package bai1;
+
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+
+public class Order {
+	private int orderID;
+	private LocalDate orderDate;
+	private OrderDertail[] lineItems;
+	private int count;
+
+	public Order(int orderID, LocalDate orderDate) {
+		this.orderID = orderID;
+		this.orderDate = orderDate;
+	}
+
+	public Order() {
+		this.lineItems = new OrderDertail[20];
+		this.count = 0;
+
+	}
+
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public OrderDertail[] getLineItems() {
+		return lineItems;
+	}
+
+	@Override
+	public String toString() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String date = dtf.format(this.orderDate);
+		NumberFormat nf = new DecimalFormat("#,##0");
+		NumberFormat nf2=new DecimalFormat("#,##0 VND");
+		
+		String output;
+	
+		 output = "Mã HD: "+this.orderID+"\n";
+		 output += "Ngày lập hóa đơn : "+date+"\n";
+		
+		 output += String.format("%-6s | %-8s | %-15s | %15s | %15s | %20s", "STT", "Mã SP", "Mô tả", "Đơn giá", "S Lượng", "Thành Tiền")+ "\n";	
+		 
+				for(int i=0;i< this.count ; i++) {
+					String gia = nf.format(this.lineItems[i].getProduct().getPrice());	
+					String thanhTien = nf2.format(this.lineItems[i].calcTotalPrice());
+					
+					output += String.format("%-6d | %-8s | %-15s | %15s | %15d | %20s", i+1, this.lineItems[i].getProduct().getProductID(), this.lineItems[i].getProduct().getDescription(), gia, this.lineItems[i].getQuatity(), thanhTien)+"\n";	
+				}
+		output += "Tổng tiền thanh toán : "+nf2.format(this.calcTotalCharge());
+		return output;
+	}
+
+	public void addLineItem(Product p, int x) {
+		if (this.count < this.lineItems.length) {
+			this.lineItems[this.count++] = new OrderDertail(p, x);
+		} else {
+			System.out.println("full size");
+		}
+	}
+
+	public double calcTotalCharge() {
+		double tong = 0;
+		for (int i = 0; i < count; i++) {
+			tong += this.lineItems[i].calcTotalPrice();
+		}
+		return tong;
+	}
+	
+	public void nhapOrder() {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("nhập orderID : ");
+		this.orderID = sc.nextInt();
+		sc.nextLine();
+
+		System.out.println("nhập orderDate : ");
+		String inputDate = sc.nextLine();
+		String date[] = inputDate.split("/");
+		int day = Integer.parseInt(date[0]);
+		int month = Integer.parseInt(date[1]);
+		int year = Integer.parseInt(date[2]);
+		this.orderDate = LocalDate.of(year, month, day);
+		
+	}
+
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		Product p =new Product();
+		p.nhap();
+		
+		System.out.println("Nhập số lượng ");
+		int soLuong = sc.nextInt();
+		OrderDertail od = new OrderDertail(p,soLuong);
+		
+		this.addLineItem(p, od.getQuatity());
+	}
+}
