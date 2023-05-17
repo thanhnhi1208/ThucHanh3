@@ -1,0 +1,99 @@
+package bai3;
+
+import java.util.Objects;
+import java.util.Scanner;
+
+public class SinhVien implements Comparable<SinhVien>{
+	private String maSV, HoTen;
+	private String namSinh;
+
+	public SinhVien(String maSV, String hoTen, String namSinh) {
+
+		this.maSV = maSV;
+		this.HoTen = hoTen;
+		this.namSinh = namSinh;
+	}
+
+	public SinhVien() {
+
+	}
+
+	public SinhVien(String maSV) {
+		this.maSV = maSV;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maSV);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SinhVien other = (SinhVien) obj;
+		return Objects.equals(maSV, other.maSV);
+	}
+
+	public String getMaSV() {
+		return maSV;
+	}
+
+	public void setMaSV(String maSV) {
+		this.maSV = maSV;
+	}
+
+	public String getHoTen() {
+		return HoTen;
+	}
+
+	public void setHoTen(String hoTen) {
+		HoTen = hoTen;
+	}
+
+	public String getNamSinh() {
+		return namSinh;
+	}
+
+	public void setNamSinh(String namSinh) {
+		this.namSinh = namSinh;
+	}
+
+	@Override
+	public String toString() {
+		return "SinhVien [maSV=" + maSV + ", HoTen=" + HoTen + ", namSinh=" + namSinh + "]";
+	}
+
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("nhập mã sinh viên");
+		this.setMaSV(sc.nextLine());
+		System.out.println("nhập họ tên");
+		this.setHoTen(sc.nextLine());
+		System.out.println("nhập năm sinh");
+		this.setNamSinh(sc.nextLine());
+	}
+
+	public SinhVien(String maSV, String hoTen) {
+		super();
+		this.maSV = maSV;
+		HoTen = hoTen;
+	}
+
+	public void sua() {
+		Scanner sc1 = new Scanner(System.in);
+		System.out.println("nhập họ tên");
+		this.setHoTen(sc1.nextLine());
+		System.out.println("nhập năm sinh");
+		this.setNamSinh(sc1.nextLine());
+	}
+
+	@Override
+	public int compareTo(SinhVien o) {
+		return this.maSV.compareTo(o.maSV);
+	}
+}
