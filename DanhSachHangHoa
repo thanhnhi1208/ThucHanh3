@@ -1,0 +1,84 @@
+package bai_2;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class DanhSachHangHoa {
+	private ArrayList<HangHoa>list;
+
+	public DanhSachHangHoa(ArrayList<HangHoa> list) {
+		this.list = list;
+	}
+
+	public DanhSachHangHoa() {
+		this.list = new ArrayList<HangHoa>();
+	}
+	
+	
+	public boolean kiemTraTonTai(HangHoa hh) {
+		return this.list.contains(hh);
+	}
+	
+	public boolean them(HangHoa hh) {
+		for (HangHoa hangHoa : list) {
+			if(hangHoa.getMaHang().equals(hh.getMaHang()))
+			return false;
+		}
+		
+		this.list.add(hh);
+		return true;
+	}
+	
+	public void in() {
+		for (HangHoa hangHoa : list) {
+			System.out.println(hangHoa);
+		}
+	}
+	
+	public static void main(String[] args) {
+		DanhSachHangHoa list = new DanhSachHangHoa();
+		Scanner sc=new Scanner(System.in);
+		int luaChon=0;
+		
+		do {
+			System.out.println("1. Nhập");
+			System.out.println("2. Xuất");
+			System.out.println("0. Thoát");
+			luaChon=sc.nextInt();
+			
+			if(luaChon==1) {
+				HangHoa hh;
+				int chon=0;
+				do {
+					System.out.println("1. Nhập hàng thực phẩm");
+					System.out.println("2. Nhập hàng điện máy");
+					System.out.println("3. Nhập hàng sành sứ");
+					System.out.println("0. Thoát");
+					chon=sc.nextInt();
+					
+					if(chon==1) {
+						hh= new HangThucPham();
+						hh.nhap();
+						System.out.println("Đã thêm :"+list.them(hh));
+					}else if(chon==2) {
+						hh = new HangDienMay();
+						hh.nhap();
+						System.out.println("Đã thêm :"+list.them(hh));
+					}else if(chon==3) {
+						hh = new HangSanhSu();
+						hh.nhap();
+						System.out.println("Đã thêm :"+list.them(hh));
+					}
+				}while(chon!= 1 && chon!=2 && chon!=3 && chon!=0);		
+				
+			}else if(luaChon==2) {
+				list.in();
+			}else if(luaChon==0) {
+				System.out.println("Bạn đã thoát");
+			}else {
+				System.out.println("Vui lòng chọn phù hợp");
+			}
+		}while(luaChon!=0);
+	}
+		
+}
