@@ -1,0 +1,43 @@
+package bai1;
+
+import java.util.Scanner;
+
+public class OrderDertail {
+	private int quatity;
+	private Product product;
+	
+	public OrderDertail(Product product,int quatity) {
+		this.quatity = quatity;
+		this.product = product;
+	}
+
+	public OrderDertail() {
+	}
+	
+	public int getQuatity() {
+		return quatity;
+	}
+
+	public void setQuatity(int quatity) {
+		this.quatity = quatity;
+	}
+	
+	public double calcTotalPrice() {
+		return this.quatity * product.getPrice();
+	}
+	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("nhập số lượng");
+		this.quatity = sc.nextInt();
+	}
+}
