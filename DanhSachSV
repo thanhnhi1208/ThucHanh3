@@ -1,0 +1,102 @@
+package bai3;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class DanhSach {
+	public ArrayList<SinhVien> list;
+
+	public DanhSach() {
+		list = new ArrayList<SinhVien>();
+	}
+
+	public DanhSach(ArrayList<SinhVien> list) {
+		this.list = list;
+	}
+
+	public void them(SinhVien sv) {
+		if (list.contains(sv)) {
+			System.out.println("đã trùng mã");
+			return;
+		} else {
+			this.list.add(sv);
+		}
+	}
+
+	public boolean xoa(SinhVien sv) {
+		return this.list.remove(sv);
+	}
+
+	public void sua(SinhVien sv) {
+		for (SinhVien sinhVien : list) {
+			if (sinhVien.getMaSV().equals(sv.getMaSV())) {
+				sinhVien.sua();
+			}
+		}
+	}
+
+	public SinhVien timKiem(SinhVien sv) {
+		for (SinhVien sinhVien : list) {
+			if (sinhVien.getMaSV().equalsIgnoreCase(sv.getMaSV())
+					&& sinhVien.getHoTen().equalsIgnoreCase(sv.getHoTen())) {
+				return sinhVien;
+			}
+		}
+		return null;
+	}
+
+	public void sapXepMaTangDan() {
+		Collections.sort(list);
+
+	}
+
+	public void xuat() {
+		for (SinhVien sinhVien : list) {
+			System.out.println(sinhVien);
+		}
+	}
+
+	public void menu() {
+		Scanner sc = new Scanner(System.in);
+		SinhVien sv;
+		DanhSach list = new DanhSach();
+		int chon = 0;
+		do {
+			System.out.println("1.nhập");
+			System.out.println("2.xóa");
+			System.out.println("3.sửa");
+			System.out.println("4.tìm kiếm");
+			System.out.println("5.sắp xếp");
+			System.out.println("6.xuất");
+			chon = sc.nextInt();
+
+			sc.nextLine();
+
+			if (chon == 1) {
+				sv = new SinhVien();
+				sv.nhap();
+				list.them(sv);
+			} else if (chon == 2) {
+				System.out.println("nhập mã muốn xóa");
+				sv = new SinhVien(sc.nextLine());
+				list.xoa(sv);
+			} else if (chon == 3) {
+				System.out.println("nhập mã muốn sửa");
+				sv = new SinhVien(sc.nextLine());
+				list.sua(sv);
+				list.xuat();
+			} else if (chon == 4) {
+				System.out.println("nhập mã sinh viên ");
+				System.out.println("Nhập tên");
+				sv = new SinhVien(sc.nextLine(), sc.nextLine());
+				System.out.println(list.timKiem(sv));
+			} else if (chon == 5) {
+				list.sapXepMaTangDan();
+			} else if (chon == 6) {
+				list.xuat();
+			}
+
+		} while (chon != 0);
+	}
+}
