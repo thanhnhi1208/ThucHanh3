@@ -1,0 +1,102 @@
+ackage bai_2;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.Scanner;
+
+public class HangThucPham extends HangHoa {
+	private LocalDate ngaySanXuat;
+	private LocalDate ngayHetHan;
+	private String nhaCungCap;
+
+	public HangThucPham(String maHang, String tenHang, int soLuongTon, int donGia) {
+		super(maHang, tenHang, soLuongTon, donGia);
+	}
+	
+	public HangThucPham() {
+	}
+	public HangThucPham(String maHang, String tenHang, int soLuongTon, double donGia, LocalDate ngaySanXuat,
+			LocalDate ngayHetHan, String nhaCungCap) {
+		super(maHang, tenHang, soLuongTon, donGia);
+		this.ngaySanXuat = ngaySanXuat;
+		this.ngayHetHan = ngayHetHan;
+		this.nhaCungCap = nhaCungCap;
+	}
+
+	public LocalDate getNgaySanXuat() {
+		return ngaySanXuat;
+	}
+
+	public void setNgaySanXuat(LocalDate ngaySanXuat) {
+		this.ngaySanXuat = ngaySanXuat;
+	}
+
+	public LocalDate getNgayHetHan() {
+		return ngayHetHan;
+	}
+
+	public void setNgayHetHan(LocalDate ngayHetHan) {
+		this.ngayHetHan = ngayHetHan;
+	}
+
+	public String getNhaCungCap() {
+		return nhaCungCap;
+	}
+
+	public void setNhaCungCap(String nhaCungCap) {
+		this.nhaCungCap = nhaCungCap;
+	}
+
+	@Override
+	public String toString() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String ngaySX = dtf.format(this.ngaySanXuat);
+		String ngayHH = dtf.format(this.ngayHetHan);
+		
+		return super.toString() + "HangThucPham [ngaySanXuat=" + ngaySX + ", ngayHetHan=" + ngayHH
+				+ ", nhaCungCap= " + this.nhaCungCap + ", Đánh giá :" + danhGia() + "]";
+	}
+
+	public void nhap() {
+		super.nhap();
+		
+	
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Nhập nhà cung cấp");
+		this.nhaCungCap =sc.nextLine();
+		
+		System.out.println("Nhập ngày sản xuất");
+		String inputSX = sc.nextLine();
+		String dateSX[] = inputSX.split("/");
+		int daySX = Integer.parseInt(dateSX[0]);
+		int monthSX = Integer.parseInt(dateSX[1]);
+		int yearSX = Integer.parseInt(dateSX[2]);
+		this.ngaySanXuat = LocalDate.of(yearSX, monthSX, daySX);
+
+		System.out.println("Nhập ngày hết hạn");
+		String inputHH = sc.nextLine(); 
+		String dateHH[] = inputHH.split("/");
+		int dayHH = Integer.parseInt(dateHH[0]);
+		int monthHH = Integer.parseInt(dateHH[1]);
+		int yearHH = Integer.parseInt(dateHH[2]);
+		this.ngayHetHan = LocalDate.of(yearHH, monthHH, dayHH);
+		if (this.ngayHetHan.isBefore(this.ngaySanXuat)) {
+			this.ngayHetHan = this.ngaySanXuat;
+		}
+
+	}
+
+	@Override
+	public double tinhVAT() {
+		return this.getDonGia() * 0.05;
+	}
+
+	@Override
+	public String danhGia() {
+		if (super.getSoLuongTon() > 0 && this.getNgayHetHan().isBefore(LocalDate.now())) {
+			return "Khó bán";
+		}
+		return "";
+	}
+}
