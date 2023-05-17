@@ -1,0 +1,73 @@
+package bai_2;
+
+import java.util.Objects;
+import java.util.Scanner;
+
+public class HangDienMay extends HangHoa {
+	private int soThangBaoHanh;
+	private int congSuat;
+
+	public HangDienMay(String maHang, String tenHang, int soLuongTon, int donGia, int soThangBaoHanh, int congSuat) {
+		super(maHang, tenHang, soLuongTon, donGia);
+		this.soThangBaoHanh = soThangBaoHanh;
+		this.congSuat = congSuat;
+	}
+
+	public HangDienMay() {
+	}
+
+	public HangDienMay(String maHang, String tenHang, int soLuongTon, int donGia) {
+		super(maHang, tenHang, soLuongTon, donGia);
+	}
+
+	public int getSoThangBaoHanh() {
+		return soThangBaoHanh;
+	}
+
+	public void setSoThangBaoHanh(int soThangBaoHanh) {
+		this.soThangBaoHanh = soThangBaoHanh;
+	}
+
+	public int getCongSuat() {
+		return congSuat;
+	}
+
+	public void setCongSuat(int congSuat) {
+		this.congSuat = congSuat;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "HangDienMay [soThangBaoHanh=" + soThangBaoHanh + ", congSuat=" + congSuat
+				+ ", Đánh giá: " + danhGia() + "]";
+	}
+
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		super.nhap();
+
+		do {
+			System.out.println("Nhập số tháng bảo hành ");
+			this.soThangBaoHanh = sc.nextInt();
+		} while (this.soThangBaoHanh < 0);
+
+		do {
+			System.out.println("Nhập số công suất ");
+			this.congSuat = sc.nextInt();
+		} while (this.congSuat <= 0);
+	}
+
+	@Override
+	public double tinhVAT() {
+		return this.getDonGia() * 0.1;
+	}
+
+	@Override
+	public String danhGia() {
+		if (super.getSoLuongTon() < 3) {
+			return "Bán được";
+		}
+		return "";
+	}
+
+}
