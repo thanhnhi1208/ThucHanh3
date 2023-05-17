@@ -1,0 +1,88 @@
+package bai_2;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Objects;
+import java.util.Scanner;
+
+public abstract class HangHoa {
+	private String maHang;
+	private String tenHang;
+	private int soLuongTon;
+	private double donGia;
+
+	public HangHoa(String maHang, String tenHang, int soLuongTon, double donGia) {
+		this.maHang = maHang;
+		this.tenHang = tenHang;
+		this.soLuongTon = soLuongTon;
+		this.donGia = donGia;
+	}
+
+	public HangHoa() {
+	}
+
+	public String getMaHang() {
+		return maHang;
+	}
+
+	public void setDonGia(double donGia) {
+		this.donGia = donGia;
+	}
+
+	public String getTenHang() {
+		return tenHang;
+	}
+
+	public void setTenHang(String tenHang) {
+		this.tenHang = tenHang;
+	}
+
+	public int getSoLuongTon() {
+		return soLuongTon;
+	}
+
+	public void setSoLuongTon(int soLuongTon) {
+		this.soLuongTon = soLuongTon;
+	}
+
+	public double getDonGia() {
+		return donGia;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = new DecimalFormat("#,##0 VNĐ");
+		String donGiaa = nf.format(this.donGia);
+		return "HangHoa [maHang=" + maHang + ", tenHang=" + tenHang + ", soLuongTon=" + soLuongTon + ", donGia="
+				+ donGiaa + "]";
+	}
+
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+
+		do {
+			System.out.println("Nhập mã hàng");
+			this.maHang = sc.nextLine();
+		} while (this.maHang.equals(""));
+
+		do {
+			System.out.println("Nhập tên hàng");
+			this.tenHang = sc.nextLine();
+		} while (this.tenHang.equals(""));
+
+		do {
+			System.out.println("Nhập số lượng tồn");
+			this.soLuongTon = sc.nextInt();
+		} while (this.soLuongTon < 0);
+
+		do {
+			System.out.println("Nhập đơn giá ");
+			this.donGia = sc.nextDouble();
+		} while (this.donGia <= 0);
+	}
+
+	public abstract double tinhVAT();
+
+	public abstract String danhGia();
+
+}
