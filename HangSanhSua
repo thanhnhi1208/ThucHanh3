@@ -1,0 +1,87 @@
+package bai_2;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+import java.util.Scanner;
+
+public class HangSanhSu extends HangHoa {
+	private String nhaSanXuat;
+	private LocalDate ngayNhapKho;
+
+	public HangSanhSu(String maHang, String tenHang, int soLuongTon, int donGia, String nhaSanXuat,
+			LocalDate ngayNhapKho) {
+		super(maHang, tenHang, soLuongTon, donGia);
+		this.nhaSanXuat = nhaSanXuat;
+		this.ngayNhapKho = ngayNhapKho;
+	}
+	
+	public HangSanhSu() {
+	}
+
+	public HangSanhSu(String maHang, String tenHang, int soLuongTon, int donGia) {
+		super(maHang, tenHang, soLuongTon, donGia);
+	}
+
+	public String getNhaSanXuat() {
+		return nhaSanXuat;
+	}
+
+	public void setNhaSanXuat(String nhaSanXuat) {
+		this.nhaSanXuat = nhaSanXuat;
+	}
+
+	public LocalDate getNgayNhapKho() {
+		return ngayNhapKho;
+	}
+
+	public void setNgayNhapKho(LocalDate ngayNhapKho) {
+		this.ngayNhapKho = ngayNhapKho;
+	}
+
+	@Override
+	public String toString() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String ngayNK = dtf.format(this.ngayNhapKho);
+		
+		return super.toString() + "HangSanhSu [nhaSanXuat=" + nhaSanXuat + ", ngayNhapKho=" + ngayNK +", Đánh giá :"+danhGia() +"]";
+	}
+
+	public void nhap() {
+		Scanner sc = new Scanner(System.in);
+		super.nhap();
+
+		System.out.println("Nhập nhà sản xuất");
+		this.nhaSanXuat = sc.nextLine();
+
+		System.out.println("Nhập ngày nhập kho");
+		String inputNK = sc.nextLine();
+		String dateNK[] = inputNK.split("/");
+		int dayNK = Integer.parseInt(dateNK[0]);
+		int monthNK = Integer.parseInt(dateNK[1]);
+		int yearNK = Integer.parseInt(dateNK[2]);
+		this.ngayNhapKho = LocalDate.of(yearNK, monthNK, dayNK);
+	}
+
+	@Override
+	public double tinhVAT() {
+		return this.getDonGia() * 0.1;
+	}
+
+	@Override
+	public String danhGia() {
+		// hàm minus là trừ , plus là thêm
+		
+		// hàm ChronoUnit.DAYS.between(ngayNhapKho, ngayHienTai) để tính toán số ngày
+		// giữa ngàyNhapKho và ngayHienTai
+		// ví dụ ngayNhapKho là ngày 18/8/2003 và ngayHienTai là ngày
+		// 29/8/2023, kết quả =  7317 ngày
+		long soNgayDaNhap = ChronoUnit.DAYS.between(ngayNhapKho, LocalDate.now());
+		if (super.getSoLuongTon() > 50 && soNgayDaNhap >10) {
+			return "Bán chậm";
+		}
+		
+		return "";
+	}
+}
