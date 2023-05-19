@@ -1,0 +1,33 @@
+package bai1;
+
+import java.util.Scanner;
+
+public class Test {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Order o = new Order();
+		int chon = 0;
+		int i=0;
+
+		do {
+			System.out.println("1. Nhập");
+			System.out.println("2. Xuất");
+			chon = sc.nextInt();
+			sc.nextLine();
+			if (chon == 1) {
+				if(i==0) {
+					o.nhapOrder();
+					o.nhap();
+					i++;
+				}else {
+					o.nhap();
+				}
+			} else if (chon == 2) {
+				System.out.println(o.toString());
+			} else {
+				System.out.println("Nhập đúng menu");
+			}
+		} while (chon != 0);
+
+	}
+}
